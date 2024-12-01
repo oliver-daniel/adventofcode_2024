@@ -1,0 +1,4 @@
+temp*
+
+in/*.txt
+!in/*test*
