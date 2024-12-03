@@ -1,0 +1,53 @@
+#! /usr/bin/python3
+from string import Template
+import sys
+
+template = """\"\"\"Solutions for Day $day.\"\"\"
+
+# N = open('./in/$day.txt').readlines()
+N = open('./in/$day.test.txt').readlines()
+
+data = N
+DEBUG = 1
+
+
+def p1(data):
+    pass
+
+
+def p2(data):
+    pass
+
+
+if __name__ == "__main__":
+    print('--- Part 1 ---')
+    print(r1 := p1(data))
+    print('\\n--- Part 2 ---')
+    print(p2(data))
+
+"""
+
+
+def buffer_in():
+    buffer = []
+    while True:
+        try:
+            line = input()
+            buffer.append(line)
+        except EOFError:
+            break
+    return "\n".join(buffer)
+
+
+if __name__ == "__main__":
+    day = sys.argv[1]
+    with open(f'./in/{day}.test.txt', 'w') as f:
+        print(f"Enter test data for day {day}, then CTRL+D:")
+        f.write(buffer_in())
+
+    with open(f'./in/{day}.txt', 'w') as f:
+        print(f"Enter real data, then CTRL+D:")
+        f.write(buffer_in())
+
+    with open(f'./{day}.py', 'w') as f:
+        f.write(Template(template).substitute(day=day))
