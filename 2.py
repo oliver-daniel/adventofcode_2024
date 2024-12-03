@@ -76,5 +76,7 @@ def p2(data):
 
 
 if __name__ == "__main__":
+    print('--- Part 1 ---')
     print(r1 := p1(data))
+    print('\n--- Part 2 ---')
     print(p2(data))

@@ -20,7 +20,7 @@ def p2(data):
 
 
 if __name__ == "__main__":
-    r1 = p1(data)
-    print(r1)
-    r2 = p2(data)
-    print(r2)
+    print('--- Part 1 ---')
+    print(r1 := p1(data))
+    print('\n--- Part 2 ---')
+    print(p2(data))
