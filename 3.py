@@ -27,13 +27,14 @@ def p2(data):
     t = 0
     ignore = False
     for op, *args in re.findall(patterns, data):
-        match op, ignore:
-            case '', False:  # mul
-                x, y = map(int, args)
-                t += x*y
-            case "don't", _:
+        match op:
+            case '':  # mul
+                if not ignore:
+                    x, y = map(int, args)
+                    t += x*y
+            case "don't":
                 ignore = True
-            case "do", _:
+            case "do":
                 ignore = False
 
     return t
