@@ -1,6 +1,7 @@
 """Solutions for Day 5."""
 
 from collections import defaultdict
+from operator import inv
 
 
 N = open('./in/5.txt').read()
@@ -90,6 +91,18 @@ def p2(data):
     return t
 
 
+def p2_oneline(data):
+    from functools import reduce
+    return sum(
+        (k := reduce(lambda acc, _: acc + [next(
+            page for page in ln if
+            page not in acc and
+            rules_dict[page] & set(ln) <= set(acc)
+        )], ln, []))[len(k) // 2]
+        for ln in data
+    )
+
+
 if __name__ == "__main__":
     valid, invalid = partition_valid(data)
 
@@ -97,3 +110,4 @@ if __name__ == "__main__":
     print(r1 := p1(valid))
     print('\n--- Part 2 ---')
     print(p2(invalid))
+    # print(p2_oneline(invalid))
