@@ -2,3 +2,5 @@ temp*
 
 in/*.txt
 !in/*test*
+
+.vscode/

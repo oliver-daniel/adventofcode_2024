@@ -1,7 +1,6 @@
 """Solutions for Day 5."""
 
 from collections import defaultdict
-from operator import inv
 
 
 N = open('./in/5.txt').read()
