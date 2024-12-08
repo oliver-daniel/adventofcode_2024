@@ -11,43 +11,31 @@ data = [
 
 DEBUG = 1
 
-
-OPS = [
-    ('+', lambda head, tot, tokens: (True, tokens, tot - head)),
-    ('*', lambda head, tot, tokens: (tot % head == 0, tokens, tot // head)),
-    # urgh this is gonna need a target instead of a tot
-    ('||', lambda head, tot, tokens: (len(tokens) > 0, 
-                                      len(tokens) > 0 and tokens[:-1] +
-                                      [int(f'{tokens[-1]}{head}')],
-                                      tot))
-]
-
-
-def search(tokens: list[int], tot: int, path: list[str], ops):
+def search(tokens: list[int], tot: int, target: int, path: list[str], with_concat=False):
     if len(tokens) == 0:
-        if tot == 0:
+        if tot == target:
             yield path
         return
-    *rest, head = tokens
-    if head > tot:
-        return
-    for symbol, f in ops:
-        predicate, next_tokens, next_tot = f(head, tot, rest)
-        if predicate:
-            yield from search(next_tokens, next_tot, path + [symbol], ops)
+    head, *rest = tokens
+    
+    yield from search(rest, tot + head, target, path + ['+'], with_concat)
+    if len(path) > 0:
+        yield from search(rest, tot * head, target, path + ['*'], with_concat)
+    if with_concat and len(path) > 0:
+        new_head = int(f'{tot}{head}')
+        yield from search(rest, new_head, target, path + ['||'], with_concat)
+
 
 
 def p1(data):
-
     return sum(
-        tot for tot, tokens in data if any(search(tokens, tot, [], OPS[:2]))
+        target for target, tokens in data if any(search(tokens, 0, target, [], False))
     )
 
 
 def p2(data):
-    # TODO: wrong
     return sum(
-        tot for tot, tokens in data if any(search(tokens, tot, [], OPS))
+        target for target, tokens in data if any(search(tokens, 0, target, [], True))
     )
 
 
