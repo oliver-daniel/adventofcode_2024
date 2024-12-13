@@ -74,7 +74,17 @@ def p1(data):
 
 
 def p2(data):
-    pass
+    """How I might tackle it:
+    If a cell only has one side exposed:
+      it's part of an ongoing wall. continue.
+    If a cell has two sides exposed:
+      1. __| - a corner. Stop counting one side and start counting another.
+      2. | | - middle. Only count one side; we'll get to the other one later.
+    3:
+      1. |_| - peninsula. Treat like a corner and prepare to go around.
+    4.
+      Just a box. Return 4 immediately.
+    """
 
 
 if __name__ == "__main__":
