@@ -17,17 +17,12 @@ for lns in eqns:
 DEBUG = 1
 
 
-def solve(a, b, prize, mx=101):
-    # TODO: proper linalg
-    return ((t, v) for t, v in it.product(range(mx), repeat=2)
-            if t * a + v * b == prize
-            )
-    # for t, v in it.product(range(101), repeat=2):
-    #     if t * a + v * b == prize:
-    #         yield t, v
-
-
 def p1(data):
+    def solve(a, b, prize):
+        # TODO: proper linalg
+        return ((t, v) for t, v in it.product(range(101), repeat=2)
+                if t * a + v * b == prize
+                )
     return sum(
         3 * a + 1 * b
         for eqn in data
@@ -38,10 +33,14 @@ def p1(data):
 def p2(data):
     MODIFIER = 10_000_000_000_000
     prize_modifier = complex(MODIFIER, MODIFIER)
+
+    def solve(a, b, prize):
+        yield (0, 0)
+
     return sum(
         3 * t + 1 * v
         for (a, b, prize) in data
-        for t, v in solve(a, b, prize + prize_modifier, MODIFIER)
+        for t, v in solve(a, b, prize + prize_modifier)
     )
 
 
