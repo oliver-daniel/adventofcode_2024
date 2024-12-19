@@ -1,6 +1,6 @@
 """Solutions for Day 19."""
 
-from functools import cache, lru_cache
+from functools import lru_cache
 
 
 N = open('./in/19.txt').read()
@@ -16,19 +16,12 @@ DEBUG = 1
 
 @lru_cache(maxsize=None)
 def ways_to_spell_cached(target, tokens=frozenset(tokens)):
-    if not target:
-        return 1
-
-    t = 0
-    for token in tokens:
-        if not target.startswith(token):
-            continue
-        suffix = target[len(token):]
-
-        if (result := ways_to_spell_cached(suffix, tokens)):
-            t += result
-
-    return t
+    return 1 if not target else sum(
+        map(
+            lambda token: ways_to_spell_cached(target[len(token):]),
+            filter(lambda token: target.startswith(token), tokens)
+        )
+    )
 
 
 def p1(data):
